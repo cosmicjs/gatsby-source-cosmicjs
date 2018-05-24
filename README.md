@@ -25,9 +25,9 @@ plugins: [
 ]
 ```
 
-## How to query
+## How to query and filter
 
-You can query the nodes created from Cosmic JS like the following:
+You can query the nodes and created from Cosmic JS like the following:
 
 ```graphql
 {
@@ -35,6 +35,22 @@ You can query the nodes created from Cosmic JS like the following:
     edges {
       node {
         id
+        slug
+        title
+      }
+    }
+  }
+}
+```
+
+and you can filter specific node using this:
+
+```graphql
+{
+  cosmicjsPosts(slug: {eq: ''}) {
+    edges {
+      node {
+        slug
         title
       }
     }
