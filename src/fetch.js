@@ -18,7 +18,11 @@ module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
   console.timeEnd("Fetch Cosmic JS data")
 
   // Map and clean data.
-  return documents.data.objects.map(item => clean(item))
+  if (documents.data.objects) {
+    return documents.data.objects.map(item => clean(item))
+  } else {
+    return []
+  }
 }
 
 /**
