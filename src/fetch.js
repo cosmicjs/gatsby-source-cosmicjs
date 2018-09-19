@@ -1,21 +1,21 @@
-import axios from "axios"
-import { isObject, startsWith, forEach } from "lodash"
+import axios from 'axios'
+import { isObject, startsWith, forEach } from 'lodash'
 
 module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
-  console.time("Fetch Cosmic JS data")
+  console.time('Fetch Cosmic JS data')
   console.log(`Starting to fetch data from Cosmic JS (${objectType})`)
 
   // Define API endpoint.
   let apiEndpoint = `${apiURL}/${bucketSlug}/objects?type=${objectType}`
 
-  if (apiAccess.hasOwnProperty("read_key") && apiAccess.read_key.length !== 0) {
+  if (apiAccess.hasOwnProperty('read_key') && apiAccess.read_key.length !== 0) {
     apiEndpoint = apiEndpoint + `&read_key=${apiAccess.read_key}`
   }
   // Make API request.
   const documents = await axios(apiEndpoint)
 
   // Query all data from endpoint
-  console.timeEnd("Fetch Cosmic JS data")
+  console.timeEnd('Fetch Cosmic JS data')
 
   // Map and clean data.
   if (documents.data.objects) {
