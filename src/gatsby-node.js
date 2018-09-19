@@ -1,20 +1,32 @@
-import axios from "axios"
-import fetchData from "./fetch"
-import { Node } from "./nodes"
-import { capitalize } from "lodash"
+import fetchData from './fetch'
+import { Node } from './nodes'
+import { mergeNames } from './utility'
+import { capitalize } from 'lodash'
 
 exports.sourceNodes = async (
   { boundActionCreators },
   {
-    apiURL = "https://api.cosmicjs.com/v1",
-    bucketSlug = "",
+    apiURL = 'https://api.cosmicjs.com/v1',
+    bucketSlug = '',
     objectTypes = [],
+    locales = [],
     apiAccess = {},
   }
 ) => {
   const { createNode } = boundActionCreators
 
-  // Generate a list of promises based on the `objectTypes` option.
+  const isLocale = locales.length > 0
+
+  if (isLocale) {
+    locales.forEach(locale => {
+      const item = {
+        slug: locale.replace('-', '_'),
+      }
+      const node = Node('Locales', item)
+      createNode(node)
+    })
+  }
+
   const promises = objectTypes.map(objectType =>
     fetchData({
       apiURL,
@@ -29,8 +41,10 @@ exports.sourceNodes = async (
 
   // Create nodes.
   objectTypes.forEach((objectType, i) => {
-    const items = data[i]
-
+    var items = data[i]
+    if (isLocale) {
+      items = mergeNames(items, locales, 'slug')
+    }
     items.forEach(item => {
       const node = Node(capitalize(objectType), item)
       createNode(node)
