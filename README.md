@@ -47,7 +47,7 @@ and you can filter specific node using this:
 
 ```graphql
 {
-  cosmicjsPosts(id: {eq: ''}) {
+  cosmicjsPosts(slug: {eq: ''}) {
     id
     slug
     title
