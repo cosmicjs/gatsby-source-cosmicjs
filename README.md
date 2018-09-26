@@ -16,8 +16,6 @@ plugins: [
     options: {
       bucketSlug: ``,
       objectTypes: [`posts`],
-      // If you have enabled localization.
-      locales: ['en','de'],
       // If you have enabled read_key to fetch data (optional).
       apiAccess: {
         read_key: ``,
@@ -29,7 +27,7 @@ plugins: [
 
 ## How to query and filter (Not Localized)
 
-You can query the nodes and created from Cosmic JS like the following:
+You can query the nodes created from Cosmic JS with the following:
 
 ```graphql
 {
@@ -50,44 +48,24 @@ and you can filter specific node using this:
 ```graphql
 {
   cosmicjsPosts(slug: {eq: ''}) {
-    edges {
-      node {
-        slug
-        title
-      }
-    }
+    id
+    slug
+    title
   }
 }
 ```
 
-## How to query ( Localized)
-
-list all available locales
+## How to query (Localized)
 
 ```graphql
 {
-  allCosmicjsLocales {
+  allCosmicjsPosts(filter: {locale: {eq: "en"}}, sort: {fields: [published_at], order: DESC}) {
     edges {
       node {
         id
-      }
-    }
-  }
-}
-```
-
-query all available nodes of locale i.e ('en')
-
-```graphql
-{
-  allCosmicjsPosts {
-    edges {
-      node {
         slug
-        en {
-          title
-          content
-        }
+        title
+        locale
       }
     }
   }

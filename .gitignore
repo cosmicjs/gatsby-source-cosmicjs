@@ -2,7 +2,6 @@
 /gatsby-node.js
 /nodes.js
 /fetch.js
-/utility.js
 /yarn.lock
 node_modules
 .idea

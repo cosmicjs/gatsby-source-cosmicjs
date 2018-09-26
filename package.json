@@ -1,6 +1,10 @@
 {
   "name": "gatsby-source-cosmicjs",
+<<<<<<< HEAD
   "version": "0.0.5",
+=======
+  "version": "0.0.4",
+>>>>>>> 4b13fb9e01b5cc9e2da7529586e08366fd898d8c
   "description": "Gatsby Source Plugin for building websites using Cosmic JS as a data source",
   "author": {
     "email": "tspiro@tonyspiro.com",
