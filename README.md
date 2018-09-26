@@ -27,7 +27,7 @@ plugins: [
 
 ## How to query and filter (Not Localized)
 
-You can query the nodes and created from Cosmic JS like the following:
+You can query the nodes created from Cosmic JS with the following:
 
 ```graphql
 {
