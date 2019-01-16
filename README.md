@@ -2,6 +2,7 @@
 
 Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Cosmic JS](https://cosmicjs.com). Cosmic JS offers a [Headless CMS](https://cosmicjs.com/headless-cms) for your Gatsby website.
 
+## Starters
 Install the [Cosmic JS Gatsby starter](https://github.com/cosmicjs/gatsby-starter):
 ```
 npm i cosmicjs -g
