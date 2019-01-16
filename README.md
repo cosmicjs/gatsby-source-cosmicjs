@@ -1,6 +1,22 @@
 # gatsby-source-cosmicjs
 
-Source plugin for fetching data into Gatsby from Cosmic JS.
+Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Cosmic JS](https://cosmicjs.com). Cosmic JS offers a [Headless CMS](https://cosmicjs.com/headless-cms) for your Gatsby website.
+
+Install the [Cosmic JS Gatsby starter](https://github.com/cosmicjs/gatsby-starter):
+```
+npm i cosmicjs -g
+cosmic init gatsby-starter
+cd gatsby-starter
+cosmic start
+```
+
+Install the [Cosmic JS Gatsby localization starter](https://github.com/cosmicjs/gatsby-localization-starter):
+```
+npm i cosmicjs -g
+cosmic init gatsby-starter
+cd gatsby-localization-starter
+cosmic start
+```
 
 ## Install
 
