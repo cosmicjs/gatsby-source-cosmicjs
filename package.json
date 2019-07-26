@@ -30,9 +30,8 @@
     "cosmicjs"
   ],
   "dependencies": {
-    "axios": "^0.17.1",
-    "gatsby-node-helpers": "^0.3.0",
-    "lodash": "^4.17.4"
+    "axios": "^0.19.0",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -40,8 +39,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
-    "prettier": "^1.5.3",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.18.2"
   },
   "pre-commit": [
     "format"
