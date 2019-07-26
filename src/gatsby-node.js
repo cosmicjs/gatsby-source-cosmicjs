@@ -1,9 +1,9 @@
 import fetchData from './fetch'
-import { Node } from './nodes'
+import { processObject } from './normalize'
 import { capitalize } from 'lodash'
 
 exports.sourceNodes = async (
-  { boundActionCreators },
+  { actions, createContentDigest },
   {
     apiURL = 'https://api.cosmicjs.com/v1',
     bucketSlug = '',
@@ -11,7 +11,7 @@ exports.sourceNodes = async (
     apiAccess = {},
   }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   const promises = objectTypes.map(objectType =>
     fetchData({
@@ -29,7 +29,11 @@ exports.sourceNodes = async (
   objectTypes.forEach((objectType, i) => {
     var items = data[i]
     items.forEach(item => {
-      const node = Node(capitalize(objectType), item)
+      const node = processObject(
+        capitalize(objectType),
+        item,
+        createContentDigest
+      )
       createNode(node)
     })
   })
