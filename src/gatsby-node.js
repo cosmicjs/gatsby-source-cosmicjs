@@ -20,9 +20,13 @@ exports.sourceNodes = async (
     const item = webhookBody.data
     switch (webhookBody.type) {
       case 'object.deleted':
-        deleteNode({
-          node: getNode(item._id),
-        })
+        if (Array.isArray(item) && item.length) {
+          for (const id of item) {
+            deleteNode({
+              node: getNode(id),
+            })
+          }
+        }
         break
       case 'object.created.draft':
       case 'object.created.published':
