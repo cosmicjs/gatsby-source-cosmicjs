@@ -24,7 +24,7 @@ exports.sourceNodes = async (
 
   const helperObject = {
     createContentDigest,
-    createNode
+    createNode,
   }
 
   /*
