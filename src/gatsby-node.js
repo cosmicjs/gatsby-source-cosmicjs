@@ -2,6 +2,15 @@ import fetchData from './fetch'
 import { processObject } from './normalize'
 import { capitalize } from 'lodash'
 
+const createNodeHelper = (item, { createContentDigest, createNode }) => {
+  const node = processObject(
+    capitalize(item.type_slug),
+    item,
+    createContentDigest
+  )
+  createNode(node)
+}
+
 exports.sourceNodes = async (
   { actions, webhookBody, createContentDigest, getNode },
   {
@@ -12,6 +21,11 @@ exports.sourceNodes = async (
   }
 ) => {
   const { createNode, deleteNode } = actions
+
+  const helperObject = {
+    createContentDigest,
+    createNode
+  }
 
   /*
    * Gatsby preview code path!
@@ -32,12 +46,7 @@ exports.sourceNodes = async (
       case 'object.created.published':
       case 'object.edited.draft':
       case 'object.edited.published':
-        const node = processObject(
-          capitalize(item.type_slug),
-          item,
-          createContentDigest
-        )
-        createNode(node)
+        createNodeHelper(item, helperObject)
         break
       default:
         break
@@ -64,12 +73,7 @@ exports.sourceNodes = async (
   objectTypes.forEach((objectType, i) => {
     var items = data[i]
     items.forEach(item => {
-      const node = processObject(
-        capitalize(objectType),
-        item,
-        createContentDigest
-      )
-      createNode(node)
+      createNodeHelper(item, helperObject)
     })
   })
 }
