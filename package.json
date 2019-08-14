@@ -30,7 +30,7 @@
     "cosmicjs"
   ],
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "gatsby-node-helpers": "^0.3.0",
     "lodash": "^4.17.4"
   },
