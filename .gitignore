@@ -1,6 +1,6 @@
 *.log
 /gatsby-node.js
-/nodes.js
+/normalize.js
 /fetch.js
 /yarn.lock
 node_modules
