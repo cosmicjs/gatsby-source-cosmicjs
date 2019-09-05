@@ -8,7 +8,7 @@ module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
   // Define API endpoint.
   let apiEndpoint = `${apiURL}/${bucketSlug}/objects?type=${objectType}`
 
-  if (apiAccess.hasOwnProperty('read_key') && apiAccess.read_key.length !== 0) {
+  if (apiAccess && apiAccess.read_key) {
     apiEndpoint = apiEndpoint + `&read_key=${apiAccess.read_key}`
   }
   // Make API request.
