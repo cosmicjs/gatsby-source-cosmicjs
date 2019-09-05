@@ -1,6 +1,6 @@
-import fetchData from './fetch'
-import { processObject } from './normalize'
-import { capitalize } from 'lodash'
+const capitalize = require('lodash/capitalize')
+const fetchData = require('./fetch')
+const { processObject } = require('./normalize')
 
 const createNodeHelper = (item, { createContentDigest, createNode }) => {
   const node = processObject(

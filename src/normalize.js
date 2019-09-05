@@ -1,4 +1,4 @@
-export const processObject = (type, item, createContentDigest) => {
+exports.processObject = (type, item, createContentDigest) => {
   const id = item._id
   delete item._id
   const nodeMetadata = {
