@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { isObject, startsWith, forEach } from 'lodash'
+const axios = require('axios')
+const _ = require('lodash')
 
 module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
   console.time('Fetch Cosmic JS data')
@@ -32,10 +32,10 @@ module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
  * @returns {object} output - Object cleaned
  */
 const clean = item => {
-  forEach(item, (value, key) => {
-    if (startsWith(key, `__`)) {
+  _.forEach(item, (value, key) => {
+    if (_.startsWith(key, `__`)) {
       delete item[key]
-    } else if (isObject(value)) {
+    } else if (_.isObject(value)) {
       item[key] = clean(value)
     }
   })

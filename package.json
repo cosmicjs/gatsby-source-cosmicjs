@@ -18,8 +18,8 @@
   "homepage": "https://cosmicjs.com",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "babel src --out-dir .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "test": "jest",
     "format": "prettier --write 'src/**/*.js'",
     "watch": "babel -w src --out-dir ."
   },
@@ -34,11 +34,9 @@
     "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
+    "@babel/cli": "^7.5.5",
+    "babel-preset-gatsby-package": "^0.2.3",
+    "jest": "^24.9.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2"
   },
