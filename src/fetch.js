@@ -1,16 +1,27 @@
 const axios = require('axios')
+const queryString = require('query-string')
 const _ = require('lodash')
 
-module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
+module.exports = async ({
+  apiURL,
+  bucketSlug,
+  objectType,
+  apiAccess,
+  preview,
+}) => {
   console.time('Fetch Cosmic JS data')
   console.log(`Starting to fetch data from Cosmic JS (${objectType})`)
 
-  // Define API endpoint.
-  let apiEndpoint = `${apiURL}/${bucketSlug}/objects?type=${objectType}`
+  // Define URL params
+  let urlParams = queryString.stringify({
+    type: objectType,
+    ...(preview && { status: 'all' }),
+    ...(apiAccess && apiAccess.read_key && { read_key: apiAccess.read_key }),
+  })
 
-  if (apiAccess && apiAccess.read_key) {
-    apiEndpoint = apiEndpoint + `&read_key=${apiAccess.read_key}`
-  }
+  // Define API endpoint.
+  let apiEndpoint = `${apiURL}/${bucketSlug}/objects?${urlParams}`
+
   // Make API request.
   const documents = await axios(apiEndpoint)
 

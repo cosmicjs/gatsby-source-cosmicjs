@@ -18,6 +18,7 @@ exports.sourceNodes = async (
     bucketSlug = '',
     objectTypes = [],
     apiAccess = {},
+    preview = false,
   }
 ) => {
   const { createNode, deleteNode } = actions
@@ -63,6 +64,7 @@ exports.sourceNodes = async (
       bucketSlug,
       objectType,
       apiAccess,
+      preview,
     })
   )
 
