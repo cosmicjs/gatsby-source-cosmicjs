@@ -27,3 +27,15 @@ test('it passes read_key, if defined', async () => {
     expect.stringContaining(`read_key=hunter2`)
   )
 })
+
+test('it passes status, if preview is true', async () => {
+  axios.mockResolvedValueOnce({
+    data: {
+      objects: [],
+    },
+  })
+
+  await fetch(getArgs({ preview: true }))
+
+  expect(axios).toHaveBeenCalledWith(expect.stringContaining(`status=all`))
+})
