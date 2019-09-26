@@ -3,12 +3,10 @@ const fetchData = require('./fetch')
 const { processObject } = require('./normalize')
 
 const createNodeHelper = (item, { createContentDigest, createNode }) => {
-  const typeSlug = _.capitalize(_.replace(item.type_slug, new RegExp("-","g"), ''))
-  const node = processObject(
-    typeSlug,
-    item,
-    createContentDigest
+  const typeSlug = _.capitalize(
+    _.replace(item.type_slug, new RegExp('-', 'g'), '')
   )
+  const node = processObject(typeSlug, item, createContentDigest)
   createNode(node)
 }
 
