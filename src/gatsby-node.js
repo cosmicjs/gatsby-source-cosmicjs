@@ -1,10 +1,11 @@
-const capitalize = require('lodash/capitalize')
+const _ = require('lodash')
 const fetchData = require('./fetch')
 const { processObject } = require('./normalize')
 
 const createNodeHelper = (item, { createContentDigest, createNode }) => {
+  const typeSlug = _.capitalize(_.replace(item.type_slug, new RegExp("-","g"), ''))
   const node = processObject(
-    capitalize(item.type_slug),
+    typeSlug,
     item,
     createContentDigest
   )
@@ -70,7 +71,7 @@ exports.sourceNodes = async (
   const data = await Promise.all(promises)
 
   // Create nodes.
-  objectTypes.forEach((objectType, i) => {
+  objectTypes.forEach((_, i) => {
     var items = data[i]
     items.forEach(item => {
       createNodeHelper(item, helperObject)
