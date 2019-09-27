@@ -4,7 +4,7 @@ const { processObject } = require('./normalize')
 
 const createNodeHelper = (item, { createContentDigest, createNode }) => {
   const typeSlug = _.capitalize(
-    _.replace(item.type_slug, new RegExp('-', 'g'), '')
+    _.camelCase(item.type_slug)
   )
   const node = processObject(typeSlug, item, createContentDigest)
   createNode(node)
