@@ -3,9 +3,8 @@ const fetchData = require('./fetch')
 const { processObject } = require('./normalize')
 
 const createNodeHelper = (item, { createContentDigest, createNode }) => {
-  const typeSlug = _.capitalize(
-    _.camelCase(item.type_slug)
-  )
+  let typeSlug = _.camelCase(item.type_slug)
+  typeSlug = typeSlug.charAt(0).toUpperCase() + typeSlug.slice(1)
   const node = processObject(typeSlug, item, createContentDigest)
   createNode(node)
 }
