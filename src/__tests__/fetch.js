@@ -24,7 +24,12 @@ test('it passes read_key, if defined', async () => {
   await fetch(getArgs({ apiAccess: { read_key } }))
 
   expect(axios).toHaveBeenCalledWith(
-    expect.stringContaining(`read_key=hunter2`)
+    expect.stringContaining(`read_key=hunter2`),
+    expect.objectContaining({
+      headers: {
+        'Accept-Encoding': expect.stringContaining(`gzip, deflate`)
+      }
+    })
   )
 })
 
@@ -37,5 +42,12 @@ test('it passes status, if preview is true', async () => {
 
   await fetch(getArgs({ preview: true }))
 
-  expect(axios).toHaveBeenCalledWith(expect.stringContaining(`status=all`))
+  expect(axios).toHaveBeenCalledWith(
+    expect.stringContaining(`status=all`),
+    expect.objectContaining({
+      headers: {
+        'Accept-Encoding': expect.stringContaining(`gzip, deflate`)
+      }
+    })
+  )
 })
