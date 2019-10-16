@@ -12,7 +12,9 @@ module.exports = async ({ apiURL, bucketSlug, objectType, apiAccess }) => {
     apiEndpoint = apiEndpoint + `&read_key=${apiAccess.read_key}`
   }
   // Make API request.
-  const documents = await axios(apiEndpoint, { headers: { "Accept-Encoding": "gzip, deflate" }})
+  const documents = await axios(apiEndpoint, {
+    headers: { 'Accept-Encoding': 'gzip, deflate' },
+  })
 
   // Query all data from endpoint
   console.timeEnd('Fetch Cosmic JS data')
