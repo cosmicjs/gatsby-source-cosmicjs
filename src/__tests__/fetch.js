@@ -27,8 +27,8 @@ test('it passes read_key, if defined', async () => {
     expect.stringContaining(`read_key=hunter2`),
     expect.objectContaining({
       headers: {
-        'Accept-Encoding': expect.stringContaining(`gzip, deflate`)
-      }
+        'Accept-Encoding': expect.stringContaining(`gzip, deflate`),
+      },
     })
   )
 })
@@ -46,8 +46,8 @@ test('it passes status, if preview is true', async () => {
     expect.stringContaining(`status=all`),
     expect.objectContaining({
       headers: {
-        'Accept-Encoding': expect.stringContaining(`gzip, deflate`)
-      }
+        'Accept-Encoding': expect.stringContaining(`gzip, deflate`),
+      },
     })
   )
 })
