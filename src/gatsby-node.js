@@ -10,13 +10,15 @@ exports.sourceNodes = async (
     objectTypes = [],
     apiAccess = {},
     preview = false,
+    localMedia = false,
   }
 ) => {
-  const { createNode, deleteNode, createTypes } = actions
+  const { createNode, deleteNode } = actions
 
   const helperObject = {
     createContentDigest,
     createNode,
+    localMedia,
   }
 
   /*
