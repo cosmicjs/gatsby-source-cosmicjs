@@ -1,13 +1,6 @@
-const _ = require('lodash')
 const fetchData = require('./fetch')
-const { processObject } = require('./normalize')
-
-const createNodeHelper = (item, { createContentDigest, createNode }) => {
-  let typeSlug = _.camelCase(item.type_slug)
-  typeSlug = typeSlug.charAt(0).toUpperCase() + typeSlug.slice(1)
-  const node = processObject(typeSlug, item, createContentDigest)
-  createNode(node)
-}
+const { createNodeHelper, createEntityTypes } = require('./utils')
+const { createGatsbyImageResolver } = require('./gatsby-image-resolver')
 
 exports.sourceNodes = async (
   { actions, webhookBody, createContentDigest, getNode },
@@ -19,7 +12,7 @@ exports.sourceNodes = async (
     preview = false,
   }
 ) => {
-  const { createNode, deleteNode } = actions
+  const { createNode, deleteNode, createTypes } = actions
 
   const helperObject = {
     createContentDigest,
@@ -56,6 +49,9 @@ exports.sourceNodes = async (
   /*
    * The existing, non-preview code path!
    */
+
+  createEntityTypes(objectTypes, createTypes)
+
   const promises = objectTypes.map(objectType =>
     fetchData({
       apiURL,
@@ -70,10 +66,12 @@ exports.sourceNodes = async (
   const data = await Promise.all(promises)
 
   // Create nodes.
-  objectTypes.forEach((_, i) => {
+  objectTypes.forEach((_item, i) => {
     var items = data[i]
     items.forEach(item => {
       createNodeHelper(item, helperObject)
     })
   })
 }
+
+exports.createResolvers = createGatsbyImageResolver
