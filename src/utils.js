@@ -9,23 +9,26 @@ const generateTypeSlug = slug => {
 }
 
 const createMediaArray = (item, { createContentDigest, createNode }) => {
-  var images = []
   item.metafields.forEach(metafield => {
     if (
       metafield.type == 'file' &&
       metafield.url &&
       metafield.url.startsWith('https://cdn.cosmicjs.com')
     ) {
+      const { value, url, imgix_url, key } = metafield
       const id = md5(metafield.value)
-      metafield._id = id
-      const node = processObject('LocalImages', metafield, createContentDigest)
+      let media = {
+        _id: id,
+        value,
+        url,
+        imgix_url,
+      }
+      const node = processObject('LocalMedia', media, createContentDigest)
       createNode(node)
-      delete metafield._id
-      metafield.id = id
-      images.push(metafield)
+      item.metadata[`${key}___NODE`] = id
+      delete item.metadata[key]
     }
   })
-  item.images = images
   return item
 }
 
@@ -35,21 +38,4 @@ exports.createNodeHelper = (item, helperObject) => {
   let typeSlug = generateTypeSlug(item.type_slug)
   const node = processObject(typeSlug, item, createContentDigest)
   createNode(node)
-}
-
-exports.createEntityTypes = (objectTypes, createTypes) => {
-  createTypes(`
-    type CosmicjsLocalImages implements Node {
-      localImage: File
-    }
-  `)
-
-  objectTypes.forEach((objectType, i) => {
-    let typeSlug = generateTypeSlug(objectType)
-    createTypes(`
-      type Cosmicjs${typeSlug} implements Node {
-        images: [CosmicjsLocalImages]
-      }
-    `)
-  })
 }
