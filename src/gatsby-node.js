@@ -1,5 +1,5 @@
 const fetchData = require('./fetch')
-const { createNodeHelper, createEntityTypes } = require('./utils')
+const { createNodeHelper } = require('./utils')
 const { createGatsbyImageResolver } = require('./gatsby-image-resolver')
 
 exports.sourceNodes = async (
@@ -49,9 +49,6 @@ exports.sourceNodes = async (
   /*
    * The existing, non-preview code path!
    */
-
-  createEntityTypes(objectTypes, createTypes)
-
   const promises = objectTypes.map(objectType =>
     fetchData({
       apiURL,
