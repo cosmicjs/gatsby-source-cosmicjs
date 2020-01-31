@@ -14,8 +14,8 @@ exports.createGatsbyImageResolver = ({
 
   // Add all media libary images so they can be queried by Gatsby Image
   createResolvers({
-    CosmicjsLocalImages: {
-      localImage: {
+    CosmicjsLocalMedia: {
+      local: {
         type: `File`,
         async resolve(source, _args, _context, _info) {
           if (source.url) {
