@@ -23,7 +23,8 @@ plugins: [
       // If you have enabled read_key to fetch data (optional).
       apiAccess: {
         read_key: ``, // Get this value in Bucket > Settings
-      }
+      },
+      localMedia: true // Download media locally for gatsby image (optional)
     }
   },
 ]
