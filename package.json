@@ -30,17 +30,17 @@
     "cosmicjs"
   ],
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
-    "query-string": "^6.8.3"
+    "query-string": "^6.10.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "babel-preset-gatsby-package": "^0.2.3",
+    "@babel/cli": "^7.8.4",
+    "babel-preset-gatsby-package": "^0.2.16",
     "jest": "^24.9.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.19.1"
   },
   "peerDependencies": {
     "gatsby": ">=2.13.26"
