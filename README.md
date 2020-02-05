@@ -10,17 +10,19 @@ npm install --save gatsby-source-cosmicjs
 
 ## How to use
 
+[Log into your Cosmic JS account](https://app.cosmicjs.com/login) to get your `bucketSlug` and `apiAcecss` keys.
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-cosmicjs`,
     options: {
-      bucketSlug: ``,
+      bucketSlug: ``, // Get this value in Bucket > Settings
       objectTypes: [`posts`],
       // If you have enabled read_key to fetch data (optional).
       apiAccess: {
-        read_key: ``,
+        read_key: ``, // Get this value in Bucket > Settings
       }
     }
   },
