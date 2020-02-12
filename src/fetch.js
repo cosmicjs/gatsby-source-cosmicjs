@@ -10,6 +10,7 @@ module.exports = async ({
   preview,
 }) => {
   const timeLabel = `Fetch Cosmic JS data for (${objectType})`
+  let objects = []
   console.time(timeLabel)
   console.log(`Starting to fetch data from Cosmic JS (${objectType})`)
 
@@ -28,15 +29,28 @@ module.exports = async ({
     headers: { 'Accept-Encoding': 'gzip, deflate' },
   })
 
-  // Query all data from endpoint
+  if (documents.data.objects) {
+    objects = documents.data.objects
+  } else {
+    console.error(`${objectType} error: ${documents.message}`)
+    console.timeEnd(timeLabel)
+    return objects
+  }
+
+  console.log(
+    `Fetched ${objects.length} ${
+      objects.length === 1 ? 'object' : 'objects'
+    } for object type: ${objectType}`
+  )
   console.timeEnd(timeLabel)
 
   // Map and clean data.
-  if (documents.data.objects) {
-    return documents.data.objects.map(item => clean(item))
-  } else {
-    return []
+  // Map and clean data.
+  if (objects.length > 0) {
+    objects = objects.map(item => clean(item))
   }
+
+  return objects
 }
 
 /**
