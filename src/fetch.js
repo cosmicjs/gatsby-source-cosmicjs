@@ -10,7 +10,12 @@ module.exports = async ({
   preview,
 }) => {
   const timeLabel = `Fetch Cosmic JS data for (${objectType})`
+  const axiosHeader = {
+    headers: { 'Accept-Encoding': 'gzip, deflate' },
+  }
   let objects = []
+  const limit = 1000
+  let skip = 0
   console.time(timeLabel)
   console.log(`Starting to fetch data from Cosmic JS (${objectType})`)
 
@@ -22,12 +27,10 @@ module.exports = async ({
   })
 
   // Define API endpoint.
-  let apiEndpoint = `${apiURL}/${bucketSlug}/objects?${urlParams}`
+  let apiEndpoint = `${apiURL}/${bucketSlug}/objects?${urlParams}&limit=${limit}`
 
   // Make API request.
-  const documents = await axios(apiEndpoint, {
-    headers: { 'Accept-Encoding': 'gzip, deflate' },
-  })
+  const documents = await axios(apiEndpoint, axiosHeader)
 
   if (documents.data.objects) {
     objects = documents.data.objects
@@ -35,6 +38,27 @@ module.exports = async ({
     console.error(`${objectType} error: ${documents.message}`)
     console.timeEnd(timeLabel)
     return objects
+  }
+
+  // check if there's more that request limit of objects for object type
+  if (documents.data.total && documents.data.total > limit) {
+    // Query all data from endpoint
+    // calculate number of calls to retrieve entire object type
+    const additionalCallsRequired = Math.ceil(documents.data.total / limit) - 1
+
+    for (let i = 0; i < additionalCallsRequired; i += 1) {
+      // skip previously requested objects
+      skip = skip + limit
+      const skipEndpoint = apiEndpoint + `&skip=${skip}`
+      // Query next batch from endpoint
+      const response = await axios(skipEndpoint, axiosHeader)
+      if (response.data.objects) {
+        objects = _.concat(objects, response.data.objects)
+      } else {
+        console.error(`${objectType} fetch issue: ${response.message}`)
+        break
+      }
+    }
   }
 
   console.log(
