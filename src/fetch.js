@@ -9,7 +9,8 @@ module.exports = async ({
   apiAccess,
   preview,
 }) => {
-  console.time('Fetch Cosmic JS data')
+  const timeLabel = `Fetch Cosmic JS data for (${objectType})`
+  console.time(timeLabel)
   console.log(`Starting to fetch data from Cosmic JS (${objectType})`)
 
   // Define URL params
@@ -28,7 +29,7 @@ module.exports = async ({
   })
 
   // Query all data from endpoint
-  console.timeEnd('Fetch Cosmic JS data')
+  console.timeEnd(timeLabel)
 
   // Map and clean data.
   if (documents.data.objects) {
