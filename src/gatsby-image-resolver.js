@@ -1,4 +1,3 @@
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 var md5 = require('md5')
 
 exports.createGatsbyImageResolver = (
@@ -6,6 +5,7 @@ exports.createGatsbyImageResolver = (
   { localMedia = false }
 ) => {
   if (localMedia) {
+    const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
     const { createNode, touchNode } = actions
 
     // Add all media libary images so they can be queried by Gatsby Image
