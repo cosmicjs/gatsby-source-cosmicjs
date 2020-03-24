@@ -1,13 +1,6 @@
-const _ = require('lodash')
 const fetchData = require('./fetch')
-const { processObject } = require('./normalize')
-
-const createNodeHelper = (item, { createContentDigest, createNode }) => {
-  let typeSlug = _.camelCase(item.type_slug)
-  typeSlug = typeSlug.charAt(0).toUpperCase() + typeSlug.slice(1)
-  const node = processObject(typeSlug, item, createContentDigest)
-  createNode(node)
-}
+const { createNodeHelper } = require('./utils')
+const { createGatsbyImageResolver } = require('./gatsby-image-resolver')
 
 exports.sourceNodes = async (
   { actions, webhookBody, createContentDigest, getNode },
@@ -17,6 +10,7 @@ exports.sourceNodes = async (
     objectTypes = [],
     apiAccess = {},
     preview = false,
+    localMedia = false,
   }
 ) => {
   const { createNode, deleteNode } = actions
@@ -24,6 +18,7 @@ exports.sourceNodes = async (
   const helperObject = {
     createContentDigest,
     createNode,
+    localMedia,
   }
 
   /*
@@ -70,10 +65,12 @@ exports.sourceNodes = async (
   const data = await Promise.all(promises)
 
   // Create nodes.
-  objectTypes.forEach((_, i) => {
+  objectTypes.forEach((_item, i) => {
     var items = data[i]
     items.forEach(item => {
       createNodeHelper(item, helperObject)
     })
   })
 }
+
+exports.createResolvers = createGatsbyImageResolver

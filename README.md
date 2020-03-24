@@ -23,7 +23,8 @@ plugins: [
       // If you have enabled read_key to fetch data (optional).
       apiAccess: {
         read_key: ``, // Get this value in Bucket > Settings
-      }
+      },
+      localMedia: true // Download media locally for gatsby image (optional)
     }
   },
 ]
@@ -58,6 +59,36 @@ and you can filter specific node using this:
   }
 }
 ```
+
+## How to use Gatsby Image
+
+if `localMedia=true` in plugin config, you can use Gatsby Image.
+
+#### Note: `gatsby-image` and `gatsby-source-filesystem` plugins are required. 
+
+```graphql
+{
+  allCosmicjsPosts {
+    edges {
+      node {
+        slug
+        metadata{
+          hero {
+            local {
+              childImageSharp {
+                fluid(quality: 90, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+Read `gatsby-image` documentation here [here](https://www.gatsbyjs.org/packages/gatsby-image/).
 
 ## How to query (Localized)
 
