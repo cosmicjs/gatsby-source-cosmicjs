@@ -1,6 +1,7 @@
 const _ = require('lodash')
 var md5 = require('md5')
 const { processObject } = require('./normalize')
+const isImage = require('is-image')
 
 const generateTypeSlug = slug => {
   let typeSlug = _.camelCase(slug)
@@ -8,25 +9,60 @@ const generateTypeSlug = slug => {
   return typeSlug
 }
 
-const createMediaArray = (item, { createContentDigest, createNode }) => {
+const createMediaNode = (
+  metadata,
+  metafield,
+  { createContentDigest, createNode }
+) => {
+  if (
+    metafield.type == 'file' &&
+    metafield.url &&
+    metafield.url.startsWith('https://cdn.cosmicjs.com') &&
+    isImage(metafield.url)
+  ) {
+    const { value, url, imgix_url, key } = metafield
+    const id = md5(metafield.value)
+    let media = {
+      _id: id,
+      value,
+      url,
+      imgix_url,
+    }
+    const node = processObject('LocalMedia', media, createContentDigest)
+    createNode(node)
+    metadata[`${key}___NODE`] = id
+    delete metadata[key]
+  }
+}
+
+const createMediaArray = (item, helperObject) => {
+  /* Check for base case */
+  if (item.metafields === undefined || item.metafields === null) {
+    return item
+  }
   item.metafields.forEach(metafield => {
+    // If file, create media node
+    if (metafield.type == 'file')
+      createMediaNode(item.metadata, metafield, helperObject)
+    // Process object
+    if (metafield.type === 'object' && metafield.object) {
+      item.metadata[metafield.key] = createMediaArray(
+        metafield.object,
+        helperObject
+      )
+    }
+    // Process objects
     if (
-      metafield.type == 'file' &&
-      metafield.url &&
-      metafield.url.startsWith('https://cdn.cosmicjs.com')
+      metafield.type === 'objects' &&
+      metafield.objects &&
+      Array.isArray(metafield.objects)
     ) {
-      const { value, url, imgix_url, key } = metafield
-      const id = md5(metafield.value)
-      let media = {
-        _id: id,
-        value,
-        url,
-        imgix_url,
+      for (let i = 0; metafield.objects.length > i; i += 1) {
+        item.metadata[metafield.key][i] = createMediaArray(
+          metafield.objects[i],
+          helperObject
+        )
       }
-      const node = processObject('LocalMedia', media, createContentDigest)
-      createNode(node)
-      item.metadata[`${key}___NODE`] = id
-      delete item.metadata[key]
     }
   })
   return item
