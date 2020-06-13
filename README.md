@@ -1,6 +1,6 @@
-# Gatsby Source for Cosmic JS
+# Gatsby Source for Cosmic
 
-Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Cosmic JS](https://cosmicjs.com). Cosmic JS offers a [Headless CMS](https://cosmicjs.com/headless-cms) for your Gatsby website.
+Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Cosmic](https://cosmicjs.com). Cosmic offers a [Headless CMS](https://cosmicjs.com/headless-cms) for your Gatsby website.
 
 ## Install
 
@@ -10,7 +10,7 @@ npm install --save gatsby-source-cosmicjs
 
 ## How to use
 
-[Log into your Cosmic JS account](https://app.cosmicjs.com/login) to get your `bucketSlug` and `apiAcecss` keys.
+[Log into your Cosmic account](https://app.cosmicjs.com/login) to get your `bucketSlug` and `apiAcecss` keys.
 
 ```javascript
 // In your gatsby-config.js
@@ -32,7 +32,7 @@ plugins: [
 
 ## How to query and filter (Not Localized)
 
-You can query the nodes created from Cosmic JS with the following:
+You can query the nodes created from Cosmic with the following:
 
 ```graphql
 {
@@ -108,7 +108,7 @@ Read `gatsby-image` documentation here [here](https://www.gatsbyjs.org/packages/
 ```
 
 ## Starters
-Install the [Cosmic JS Gatsby starter](https://github.com/cosmicjs/gatsby-starter):
+Install the [Cosmic Gatsby starter](https://github.com/cosmicjs/gatsby-starter):
 ```
 npm i cosmicjs -g
 cosmic init gatsby-starter
@@ -116,7 +116,7 @@ cd gatsby-starter
 cosmic start
 ```
 
-Install the [Cosmic JS Gatsby localization starter](https://github.com/cosmicjs/gatsby-localization-starter):
+Install the [Cosmic Gatsby localization starter](https://github.com/cosmicjs/gatsby-localization-starter):
 ```
 npm i cosmicjs -g
 cosmic init gatsby-starter
