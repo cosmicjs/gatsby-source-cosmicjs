@@ -45,25 +45,25 @@ const createMediaArray = (item, helperObject) => {
     if (metafield.type == 'file')
       createMediaNode(item.metadata, metafield, helperObject)
     // Process object
-    if (metafield.type === 'object' && metafield.object) {
-      item.metadata[metafield.key] = createMediaArray(
-        metafield.object,
-        helperObject
-      )
-    }
-    // Process objects
-    if (
-      metafield.type === 'objects' &&
-      metafield.objects &&
-      Array.isArray(metafield.objects)
-    ) {
-      for (let i = 0; metafield.objects.length > i; i += 1) {
-        item.metadata[metafield.key][i] = createMediaArray(
-          metafield.objects[i],
-          helperObject
-        )
-      }
-    }
+    // if (metafield.type === 'object' && metafield.object) {
+    //   item.metadata[metafield.key] = createMediaArray(
+    //     metafield.object,
+    //     helperObject
+    //   )
+    // }
+    // // Process objects
+    // if (
+    //   metafield.type === 'objects' &&
+    //   metafield.objects &&
+    //   Array.isArray(metafield.objects)
+    // ) {
+    //   for (let i = 0; metafield.objects.length > i; i += 1) {
+    //     item.metadata[metafield.key][i] = createMediaArray(
+    //       metafield.objects[i],
+    //       helperObject
+    //     )
+    //   }
+    // }
   })
   return item
 }
