@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-cosmicjs",
-  "version": "1.1.0",
+  "version": "1.2.0-next-1",
   "description": "Gatsby Source Plugin for building websites using Cosmic JS as a data source",
   "author": {
     "email": "tspiro@tonyspiro.com",
@@ -37,11 +37,11 @@
     "query-string": "^6.10.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "jest": "^24.9.0",
+    "@babel/cli": "^7.10.4",
+    "babel-preset-gatsby-package": "^0.5.1",
+    "jest": "^26.1.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.19.1"
+    "prettier": "^2.0.5"
   },
   "peerDependencies": {
     "gatsby": ">=2.13.26"

@@ -3,7 +3,7 @@ var md5 = require('md5')
 const { processObject } = require('./normalize')
 const isImage = require('is-image')
 
-const generateTypeSlug = slug => {
+const generateTypeSlug = (slug) => {
   let typeSlug = _.camelCase(slug)
   typeSlug = typeSlug.charAt(0).toUpperCase() + typeSlug.slice(1)
   return typeSlug
@@ -40,12 +40,14 @@ const createMediaArray = (item, helperObject) => {
   if (item.metafields === undefined || item.metafields === null) {
     return item
   }
-  item.metafields.forEach(metafield => {
+  item.metafields.forEach((metafield) => {
     // If file, create media node
     if (metafield.type == 'file')
       createMediaNode(item.metadata, metafield, helperObject)
     // Process object
     if (metafield.type === 'object' && metafield.object) {
+      if (!metafield.object.metadata)
+        metafield.object.metadata = item.metadata[metafield.key].metadata
       item.metadata[metafield.key] = createMediaArray(
         metafield.object,
         helperObject
@@ -58,6 +60,9 @@ const createMediaArray = (item, helperObject) => {
       Array.isArray(metafield.objects)
     ) {
       for (let i = 0; metafield.objects.length > i; i += 1) {
+        if (!metafield.objects[i].metadata)
+          metafield.objects[i].metadata =
+            item.metadata[metafield.key][i].metadata
         item.metadata[metafield.key][i] = createMediaArray(
           metafield.objects[i],
           helperObject
