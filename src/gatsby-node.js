@@ -1,9 +1,16 @@
 const fetchData = require('./fetch')
 const { createNodeHelper } = require('./utils')
 const { createGatsbyImageResolver } = require('./gatsby-image-resolver')
+const { ERROR_MAP, CODES, prefixId } = require('./errorMap')
+
+exports.onPreInit = async ( { reporter }, {}) => {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+}
 
 exports.sourceNodes = async (
-  { actions, webhookBody, createContentDigest, getNode },
+  { actions, webhookBody, createContentDigest, getNode, reporter },
   {
     apiURL = 'https://api.cosmicjs.com/v1',
     bucketSlug = '',
@@ -14,6 +21,14 @@ exports.sourceNodes = async (
   }
 ) => {
   const { createNode, deleteNode } = actions
+
+  reporter.panic(
+    {
+      id: prefixId(CODES.MissingBucketSlug),
+      context: {sourceMessage: err.stack},
+    },
+    err.stack,
+  )
 
   const helperObject = {
     createContentDigest,
