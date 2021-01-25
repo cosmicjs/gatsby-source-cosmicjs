@@ -24,7 +24,8 @@ plugins: [
       apiAccess: {
         read_key: ``, // Get this value in Bucket > Settings
       },
-      localMedia: true // Download media locally for gatsby image (optional)
+      localMedia: true, // Download media locally for gatsby image (optional)
+      limit: 1000, // The number of Objects to fetch on each request (optional)
     }
   },
 ]
