@@ -14,7 +14,7 @@ module.exports = async ({
     headers: { 'Accept-Encoding': 'gzip, deflate' },
   }
   let objects = []
-  const limit = 1000
+  const limit = 100
   let skip = 0
   console.time(timeLabel)
   console.log(`Starting to fetch data from Cosmic JS (${objectType})`)
