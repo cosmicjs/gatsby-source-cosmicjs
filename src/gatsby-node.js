@@ -9,6 +9,7 @@ exports.sourceNodes = async (
     bucketSlug = '',
     objectTypes = [],
     apiAccess = {},
+    limit = 1000,
     preview = false,
     localMedia = false,
   }
@@ -57,6 +58,7 @@ exports.sourceNodes = async (
       bucketSlug,
       objectType,
       apiAccess,
+      limit,
       preview,
     })
   )
