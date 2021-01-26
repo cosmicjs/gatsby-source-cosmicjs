@@ -62,7 +62,6 @@ module.exports = async ({
       console.info(`Cosmicjs Response size: (${objectType}) ${formatBytes(firstResponseSize)}`)
     }
     if (firstResponseSize > 4100000) {
-      console.info("size", firstResponseSize)
       console.warn(`Cosmicjs response is close to API limit: (${objectType}) ${formatBytes(firstResponseSize)}` +
         "\n" +
         `Consider using the "limit" param to reduce objects per request` +
