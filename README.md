@@ -26,10 +26,57 @@ plugins: [
       },
       localMedia: true, // Download media locally for gatsby image (optional)
       limit: 1000, // The number of Objects to fetch on each request (optional)
+      debug: false, // Optional: will output details about the API requests to Cosmic
     }
   },
 ]
 ```
+
+### Advanced configuration
+
+For more control over how content is sourced from Cosmic, you can provide object type overrides
+in the plugin configuration. This can be useful if you are coming up against API limits, or are
+trying to performance tune your builds. Use at your own risk!
+
+[Get Objects API documentation](https://docs.cosmicjs.com/rest-api/objects.html#get-objects)
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-source-cosmicjs`,
+    options: {
+      bucketSlug: ``, // Get this value in Bucket > Settings
+      objectTypes: [
+        // Basic usage: define objectType as a string
+        `posts`, 
+        // Advanced usage: define objectType as an object
+        { 
+          type: `news`, // required
+          params: { // any valid API parameter can be used. YMMV!
+            hide_metadata: true,
+            limit: 100, // this will override the limit only for this object type
+          },
+        },
+      ],
+      // If you have enabled read_key to fetch data (optional).
+      apiAccess: {
+        read_key: ``, // Get this value in Bucket > Settings
+      },
+      localMedia: true, // Download media locally for gatsby image (optional)
+      limit: 1000, // The number of Objects to fetch on each request (optional)
+      debug: false, // Optional: will output details about the API requests to Cosmic
+    }
+  },
+]
+```
+
+### Debugging
+
+Use the `debug: true` flag in your config to get more information about the build. This will provide:
+
+- Exact Cosmic API endpoint being used for each object type
+- Response size returned from Cosmic for the request
 
 ## How to query and filter (Not Localized)
 
