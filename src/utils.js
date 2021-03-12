@@ -15,7 +15,7 @@ const createMediaNode = (
   { createContentDigest, createNode }
 ) => {
   if (
-    metafield.type == 'file' &&
+    metafield.type === 'file' &&
     metafield.url &&
     metafield.url.startsWith('https://cdn.cosmicjs.com') &&
     isImage(metafield.url)
@@ -42,7 +42,7 @@ const createMediaArray = (item, helperObject) => {
   }
   item.metafields.forEach((metafield) => {
     // If file, create media node
-    if (metafield.type == 'file')
+    if (metafield.type === 'file')
       createMediaNode(item.metadata, metafield, helperObject)
     // Process object
     if (metafield.type === 'object' && metafield.object) {
