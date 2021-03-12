@@ -1,5 +1,5 @@
 const _ = require('lodash')
-var md5 = require('md5')
+const md5 = require('md5')
 const { processObject } = require('./normalize')
 const isImage = require('is-image')
 
