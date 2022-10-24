@@ -2,6 +2,8 @@
 /gatsby-node.js
 /normalize.js
 /fetch.js
+/utils.js
+/gatsby-image-resolver.js
 /yarn.lock
 node_modules
 .idea

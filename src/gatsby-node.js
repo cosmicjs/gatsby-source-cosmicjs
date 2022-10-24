@@ -1,13 +1,6 @@
-const _ = require('lodash')
 const fetchData = require('./fetch')
-const { processObject } = require('./normalize')
-
-const createNodeHelper = (item, { createContentDigest, createNode }) => {
-  let typeSlug = _.camelCase(item.type_slug)
-  typeSlug = typeSlug.charAt(0).toUpperCase() + typeSlug.slice(1)
-  const node = processObject(typeSlug, item, createContentDigest)
-  createNode(node)
-}
+const { createNodeHelper } = require('./utils')
+const { createGatsbyImageResolver } = require('./gatsby-image-resolver')
 
 exports.sourceNodes = async (
   { actions, webhookBody, createContentDigest, getNode },
@@ -16,7 +9,10 @@ exports.sourceNodes = async (
     bucketSlug = '',
     objectTypes = [],
     apiAccess = {},
+    limit = 1000,
     preview = false,
+    localMedia = false,
+    debug = false,
   }
 ) => {
   const { createNode, deleteNode } = actions
@@ -24,6 +20,7 @@ exports.sourceNodes = async (
   const helperObject = {
     createContentDigest,
     createNode,
+    localMedia,
   }
 
   /*
@@ -56,13 +53,15 @@ exports.sourceNodes = async (
   /*
    * The existing, non-preview code path!
    */
-  const promises = objectTypes.map(objectType =>
+  const promises = objectTypes.map(object =>
     fetchData({
       apiURL,
       bucketSlug,
-      objectType,
+      object,
       apiAccess,
+      limit,
       preview,
+      debug,
     })
   )
 
@@ -70,10 +69,12 @@ exports.sourceNodes = async (
   const data = await Promise.all(promises)
 
   // Create nodes.
-  objectTypes.forEach((_, i) => {
-    var items = data[i]
+  objectTypes.forEach((_item, i) => {
+    const items = data[i]
     items.forEach(item => {
       createNodeHelper(item, helperObject)
     })
   })
 }
+
+exports.createResolvers = createGatsbyImageResolver
