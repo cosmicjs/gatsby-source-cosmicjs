@@ -9,18 +9,19 @@ module.exports = async ({
   apiAccess,
   limit,
   preview,
-  debug
+  debug,
 }) => {
   // check if we have a basic object type string, or override config parmas for this object type.
-  const objectType = (typeof object === "string") ? object : object.type
+  const objectType = typeof object === 'string' ? object : object.type
   // set the api batch limit to the global setting or the object type override
-  const batchSize = (object.params && object.params.limit) ? object.params.limit : limit
+  const batchSize =
+    object.params && object.params.limit ? object.params.limit : limit
 
-  const timeLabel = `Fetch Cosmic JS data for (${objectType})`;
+  const timeLabel = `Fetch Cosmic JS data for (${objectType})`
   const axiosHeader = {
     headers: {
-      'Accept-Encoding': 'gzip, deflate'
-    }
+      'Accept-Encoding': 'gzip, deflate',
+    },
   }
   let objects = []
   let skip = 0
@@ -31,18 +32,18 @@ module.exports = async ({
   let urlParams = queryString.stringify({
     type: objectType,
     ...(preview && {
-      status: 'all'
+      status: 'all',
     }),
-    ...(apiAccess && apiAccess.read_key && {
-      read_key: apiAccess.read_key
-    }),
+    ...(apiAccess &&
+      apiAccess.read_key && {
+        read_key: apiAccess.read_key,
+      }),
   })
 
   // Handle additional API request parameters from gatsby-config.js
   if (object.params) {
-    urlParams += "&" + queryString.stringify(object.params)
-  }
-  else {
+    urlParams += '&' + queryString.stringify(object.params)
+  } else {
     urlParams += `&limit=${batchSize}`
   }
 
@@ -50,7 +51,7 @@ module.exports = async ({
   let apiEndpoint = `${apiURL}/${bucketSlug}/objects?${urlParams}`
 
   if (debug) {
-    console.info("api endpoint: ", apiEndpoint)
+    console.info('api endpoint: ', apiEndpoint)
   }
 
   let documents = {}
@@ -59,24 +60,35 @@ module.exports = async ({
     documents = await axios(apiEndpoint, axiosHeader)
     const firstResponseSize = documents.headers['content-length']
     if (debug) {
-      console.info(`Cosmicjs Response size: (${objectType}) ${formatBytes(firstResponseSize)}`)
-    }
-    if (firstResponseSize > 4100000) {
-      console.warn(`Cosmicjs response is close to API limit: (${objectType}) ${formatBytes(firstResponseSize)}` +
-        "\n" +
-        `Consider using the "limit" param to reduce objects per request` +
-        "\n"
+      console.info(
+        `Cosmicjs Response size: (${objectType}) ${formatBytes(
+          firstResponseSize
+        )}`
       )
     }
-  }
-  catch (e) {
-    console.error(`(${objectType}) error - ${e.response.status}: `, e.response.statusText)
-    if (e.response.statusText === "first byte timeout") {
-      console.info("This error is usually caused by API response limits. You may want to " +
-        "check to see if you can reduce the amount of data returned by limiting the objects per " +
-        "request or limiting the fields/properties requested for those objects." +
-        "\n\n" +
-        "See https://docs.cosmicjs.com/rest-api/objects.html#get-objects");
+    if (firstResponseSize > 4100000) {
+      console.warn(
+        `Cosmicjs response is close to API limit: (${objectType}) ${formatBytes(
+          firstResponseSize
+        )}` +
+          '\n' +
+          `Consider using the "limit" param to reduce objects per request` +
+          '\n'
+      )
+    }
+  } catch (e) {
+    console.error(
+      `(${objectType}) error - ${e.response.status}: `,
+      e.response.statusText
+    )
+    if (e.response.statusText === 'first byte timeout') {
+      console.info(
+        'This error is usually caused by API response limits. You may want to ' +
+          'check to see if you can reduce the amount of data returned by limiting the objects per ' +
+          'request or limiting the fields/properties requested for those objects.' +
+          '\n\n' +
+          'See https://docs.cosmicjs.com/rest-api/objects.html#get-objects'
+      )
     }
     return []
   }
@@ -93,7 +105,8 @@ module.exports = async ({
   if (documents.data.total && documents.data.total > batchSize) {
     // Query all data from endpoint
     // calculate number of calls to retrieve entire object type
-    const additionalCallsRequired = Math.ceil(documents.data.total / batchSize) - 1
+    const additionalCallsRequired =
+      Math.ceil(documents.data.total / batchSize) - 1
     for (let i = 0; i < additionalCallsRequired; i += 1) {
       // skip previously requested objects
       skip = skip + batchSize
@@ -102,13 +115,18 @@ module.exports = async ({
       const response = await axios(skipEndpoint, axiosHeader)
       const responseSize = response.headers['content-length']
       if (debug) {
-        console.info(`Cosmicjs Response size: (${objectType}) ${formatBytes(responseSize)}`)
+        console.info(
+          `Cosmicjs Response size: (${objectType}) ${formatBytes(responseSize)}`
+        )
       }
       if (responseSize > 4100000) {
-        console.warn(`Cosmicjs response is close to API limit: (${objectType}) ${formatBytes(responseSize)}` +
-          `\n` +
-          `Consider using the "limit" param to reduce objects per request` +
-          "\n"
+        console.warn(
+          `Cosmicjs response is close to API limit: (${objectType}) ${formatBytes(
+            responseSize
+          )}` +
+            `\n` +
+            `Consider using the "limit" param to reduce objects per request` +
+            '\n'
         )
       }
 
@@ -158,7 +176,7 @@ const clean = item => {
  * @param decimals
  * @return {string}
  */
-const formatBytes =(bytes, decimals = 2) => {
+const formatBytes = (bytes, decimals = 2) => {
   if (bytes === 0) return '0 Bytes'
 
   const k = 1024
