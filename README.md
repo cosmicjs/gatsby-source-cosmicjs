@@ -54,7 +54,7 @@ plugins: [
         { 
           type: `news`, // required
           params: { // any valid API parameter can be used. YMMV!
-            hide_metadata: true,
+            hide_metafields: true, // hides metafields, which can get pretty large. You should only need metadata
             limit: 100, // this will override the limit only for this object type
           },
         },
