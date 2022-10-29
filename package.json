@@ -30,7 +30,7 @@
     "cosmicjs"
   ],
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "is-image": "^3.0.0",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
