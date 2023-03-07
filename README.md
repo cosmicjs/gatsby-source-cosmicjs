@@ -1,3 +1,6 @@
+# IMPORTANT
+This repo is now deprecated. Please see the new home of the Cosmic Gatsby source plugin at [https://www.npmjs.com/package/@cosmicjs/gatsby-source-cosmic](https://www.npmjs.com/package/@cosmicjs/gatsby-source-cosmic).
+
 # Gatsby Source for Cosmic
 
 Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Cosmic](https://cosmicjs.com). Cosmic offers a [Headless CMS](https://cosmicjs.com/headless-cms) for your Gatsby website.
