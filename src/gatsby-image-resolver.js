@@ -15,7 +15,6 @@ exports.createGatsbyImageResolver = (
           type: `File`,
           async resolve(source, _args, _context, _info) {
             if (source.url) {
-              let fileNodeID
               let fileNode
               const checksum = md5(source.value)
 
@@ -29,15 +28,16 @@ exports.createGatsbyImageResolver = (
 
                 // check if node still exists in cache
                 if (fileNode) {
-                  fileNodeID = cacheMediaData.fileNodeID
                   touchNode({
-                    nodeId: fileNodeID,
+                    ...fileNode,
+                    // Keep nodeId to make it backward compatible
+                    nodeId: fileNode.id,
                   })
                 }
               }
 
               // If we don't have cached data, download the file
-              if (!fileNodeID) {
+              if (!fileNode) {
                 try {
                   // Get the filenode
                   fileNode = await createRemoteFileNode({
@@ -50,7 +50,7 @@ exports.createGatsbyImageResolver = (
                   })
 
                   if (fileNode) {
-                    fileNodeID = fileNode.id
+                    const fileNodeID = fileNode.id
 
                     await cache.set(mediaDataCacheKey, {
                       fileNodeID,
